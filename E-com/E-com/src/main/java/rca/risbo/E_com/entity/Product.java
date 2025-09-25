@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Getter
@@ -42,7 +43,7 @@ public class Product {
 
     @Column(nullable = false, precision = 10, scale = 2)
     @DecimalMin(value = "0.0", inclusive = false, message = "Le prix doit être supérieur à 0")
-    private Double price;
+    private BigDecimal price;
 
     @Column(nullable = false)
     @Min(value = 0, message = "La quantité ne peut pas être négative")
