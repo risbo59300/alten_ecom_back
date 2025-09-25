@@ -11,6 +11,7 @@ import rca.risbo.E_com.exceptions.DuplicateProductCodeException;
 import rca.risbo.E_com.exceptions.ProductNotFoundException;
 import rca.risbo.E_com.repositories.ProductRepository;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -49,7 +50,7 @@ public class ProductService {
         Product existingProduct = getProductById(id);
 
         // Vérifier que le code n'est pas utilisé par un autre produit
-        if (existingProduct.getCode().equals(productDetails.getCode()) &&
+        if (!existingProduct.getCode().equals(productDetails.getCode()) &&
                 productRepository.existsByCode(productDetails.getCode())) {
             throw new DuplicateProductCodeException("Un produit avec le code " + productDetails.getCode() + " existe déjà");
         }
@@ -64,6 +65,12 @@ public class ProductService {
         existingProduct.setInternalReference(productDetails.getInternalReference());
         existingProduct.setShellId(productDetails.getShellId());
         existingProduct.setRating(productDetails.getRating());
+
+        // Déterminer le statut d’inventaire
+        existingProduct.setInventoryStatus(determineInventoryStatus(productDetails.getQuantity()));
+
+        // Mettre à jour la date
+        existingProduct.setUpdatedAt(Instant.now().toEpochMilli());
 
         return productRepository.save(existingProduct);
     }
@@ -97,6 +104,12 @@ public class ProductService {
 
     public List<String> getAllCategories() {
         return productRepository.findAllCategories();
+    }
+
+    private InventoryStatus determineInventoryStatus(Integer qty) {
+        if (qty == null || qty == 0) return InventoryStatus.OUTOFSTOCK;
+        if (qty <= 10) return InventoryStatus.LOWSTOCK;
+        return InventoryStatus.INSTOCK;
     }
 
 

@@ -53,7 +53,6 @@ public class Product {
     private String internalReference;
 
     @Column(name = "shell_id")
-    @NotBlank(message = "Le nom est obligatoire")
     private Long ShellId;
 
     @Column(name = "inventory_status", nullable = false)
@@ -90,6 +89,4 @@ public class Product {
         if (qty <= 10) return InventoryStatus.LOWSTOCK;
         return InventoryStatus.INSTOCK;
     }
-
-
 }
