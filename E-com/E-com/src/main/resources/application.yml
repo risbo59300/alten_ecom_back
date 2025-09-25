@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/productdb
+    username: liam
+    password: liam
+    driver-class-name: org.postresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          format_sql: true
+      show-sql: true
+
+  application:
+    name: E-com
+
+  server:
+    port: 8080
+
+  logging:
+    level:
+      rca.risbo.E_com: DEBUG
+      org.hibernate.SQL: DEBUG
