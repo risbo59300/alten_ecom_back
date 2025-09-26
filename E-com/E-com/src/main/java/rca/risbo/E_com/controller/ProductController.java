@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rca.risbo.E_com.annotation.AdminOnly;
 import rca.risbo.E_com.entity.InventoryStatus;
 import rca.risbo.E_com.entity.Product;
 import rca.risbo.E_com.services.ProductService;
@@ -58,12 +59,14 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
 
+    @AdminOnly
     @PostMapping
     public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product) {
         Product createdProduct = productService.createProduct(product);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
     }
 
+    @AdminOnly
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(
             @PathVariable Long id,
@@ -73,6 +76,7 @@ public class ProductController {
         return ResponseEntity.ok(updatedProduct);
     }
 
+    @AdminOnly
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletProduct(@PathVariable Long id) {
         productService.deleteProduct(id);

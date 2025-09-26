@@ -36,4 +36,8 @@ public class WishlistItem {
         }
     }
 
+    public WishlistItem(User user, Product product) {
+        this.user = user;
+        this.product = product;
+    }
 }

@@ -56,6 +56,13 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WishlistItem> wishlistItems =new ArrayList<>();
 
+    public User( String username, String firstname, String email, String password) {
+        this.username = username;
+        this.firstname = firstname;
+        this.email = email;
+        this.password = password;
+    }
+
     @PreUpdate
     public void preUpdate() {
         this.updatedAt = Instant.now().toEpochMilli();

@@ -34,6 +34,12 @@ public class CartItem {
     @Column(name = "added_at", nullable = false)
     private Long addedAt;
 
+    public CartItem( User user, Product product, Integer quantity) {
+        this.user = user;
+        this.product = product;
+        this.quantity = quantity;
+    }
+
     @PrePersist
     public void prePersist() {
         if (this.addedAt == null) {
